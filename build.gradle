@@ -38,4 +38,7 @@ ext {
     // Retrofit
     retrofitVer = '2.9.0'
     retrofitMoshiConvVer = '2.9.0'
+
+    // Dagger
+    daggerVer = '2.40'
 }
