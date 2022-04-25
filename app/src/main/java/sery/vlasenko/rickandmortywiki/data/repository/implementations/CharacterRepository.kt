@@ -5,7 +5,6 @@ import sery.vlasenko.rickandmortywiki.data.dao.Character
 import sery.vlasenko.rickandmortywiki.data.dao.Characters
 import sery.vlasenko.rickandmortywiki.data.repository.RickAndMortyService
 import sery.vlasenko.rickandmortywiki.data.repository.interfaces.ICharacterRepository
-import java.io.IOException
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(private val service: RickAndMortyService) :
@@ -20,7 +19,7 @@ class CharacterRepository @Inject constructor(private val service: RickAndMortyS
             } else {
                 ResponseData(null, response.code())
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             ResponseData(null, e.localizedMessage)
         }
     }
@@ -34,7 +33,7 @@ class CharacterRepository @Inject constructor(private val service: RickAndMortyS
             } else {
                 ResponseData(null, response.code())
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             ResponseData(null, e.localizedMessage)
         }
     }
