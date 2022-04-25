@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/fragmentCharacters">
+    <fragment
+        android:id="@+id/fragmentCharacters"
+        android:name="sery.vlasenko.rickandmortywiki.ui.characters.FragmentCharacters"
+        android:label="FragmentCharacters" >
+        <action
+            android:id="@+id/action_fragmentCharacters_to_fragmentCharacterInfo"
+            app:destination="@id/fragmentCharacterInfo" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCharacterInfo"
+        android:name="sery.vlasenko.rickandmortywiki.ui.characterinfo.FragmentCharacterInfo"
+        android:label="FragmentCharacterInfo" />
+</navigation>
