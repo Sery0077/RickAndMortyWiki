@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import sery.vlasenko.rickandmortywiki.R
 import sery.vlasenko.rickandmortywiki.databinding.FragmentCharactersBinding
 import sery.vlasenko.rickandmortywiki.ui.App
-import sery.vlasenko.rickandmortywiki.ui.MainActivity
 import sery.vlasenko.rickandmortywiki.ui.base.BaseBindingFragment
 import sery.vlasenko.rickandmortywiki.ui.characters.adapter.AdapterCharacters
 import sery.vlasenko.rickandmortywiki.utils.Keys
@@ -75,7 +74,7 @@ class FragmentCharacters :
 
     override fun onItemClick(id: Int) {
         val args = Bundle().apply {
-            putInt(Keys.ID_KEY, id)
+            putInt(Keys.CHARACTER_ID_KEY, id)
         }
         findNavController().navigate(R.id.action_fragmentCharacters_to_fragmentCharacterInfo, args)
     }

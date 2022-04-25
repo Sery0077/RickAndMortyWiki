@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import sery.vlasenko.rickandmortywiki.ui.characterinfo.ViewModelCharacterInfo
 import sery.vlasenko.rickandmortywiki.ui.characters.ViewModelCharacters
 import sery.vlasenko.rickandmortywiki.ui.vmfactories.ViewModelFactory
 
@@ -16,5 +17,10 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ViewModelCharacters::class)
-    abstract fun bindMainViewModel(viewModel: ViewModelCharacters): ViewModel
+    abstract fun bindViewModelCharacters(viewModel: ViewModelCharacters): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ViewModelCharacterInfo::class)
+    abstract fun bindMViewModelCharacterInfo(viewModel: ViewModelCharacterInfo): ViewModel
 }

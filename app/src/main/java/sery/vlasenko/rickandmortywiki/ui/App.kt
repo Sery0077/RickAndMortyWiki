@@ -4,6 +4,7 @@ import android.app.Application
 import dagger.Component
 import sery.vlasenko.rickandmortywiki.di.NetworkModule
 import sery.vlasenko.rickandmortywiki.di.ViewModelModule
+import sery.vlasenko.rickandmortywiki.ui.characterinfo.FragmentCharacterInfo
 import sery.vlasenko.rickandmortywiki.ui.characters.FragmentCharacters
 
 class App : Application() {
@@ -22,4 +23,5 @@ class App : Application() {
 interface AppComponent {
     // Fragments
     fun inject(fragment: FragmentCharacters)
+    fun inject(fragment: FragmentCharacterInfo)
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RickAndMortyWiki</string>
+    <string name="episodes">Episodes:</string>
+    <string name="last_location">Last location:</string>
 </resources>

@@ -1,5 +1,5 @@
 package sery.vlasenko.rickandmortywiki.utils
 
 object Keys {
-    const val ID_KEY = "id"
+    const val CHARACTER_ID_KEY = "id"
 }
