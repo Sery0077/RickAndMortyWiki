@@ -2,16 +2,15 @@ package sery.vlasenko.rickandmortywiki.ui.characters
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import sery.vlasenko.rickandmortywiki.data.dao.Character
-import sery.vlasenko.rickandmortywiki.data.repository.implementations.CharacterRepository
+import sery.vlasenko.rickandmortywiki.data.repository.interfaces.ICharacterRepository
+import sery.vlasenko.rickandmortywiki.ui.base.BaseViewModel
 import javax.inject.Inject
 
-class ViewModelCharacters @Inject constructor(private val repository: CharacterRepository) :
-    ViewModel() {
+class ViewModelCharacters @Inject constructor(private val repository: ICharacterRepository) :
+    BaseViewModel() {
 
     private val _state: MutableLiveData<CharactersListState> =
         MutableLiveData(CharactersListState.DataLoading())
@@ -28,7 +27,7 @@ class ViewModelCharacters @Inject constructor(private val repository: CharacterR
 
     private fun getCharacters() {
         if (hasNextPage) {
-            CoroutineScope(Dispatchers.IO).launch {
+            job = viewModelScope.launch {
                 val response = repository.getCharacterList(maxPage)
 
                 if (response.data != null) {
@@ -54,6 +53,14 @@ class ViewModelCharacters @Inject constructor(private val repository: CharacterR
     }
 
     fun onEndScroll() {
-        getCharacters()
+        if (job.isCompleted) {
+            getCharacters()
+        }
+    }
+
+    fun onErrorClicked() {
+        if (job.isCompleted) {
+            getCharacters()
+        }
     }
 }

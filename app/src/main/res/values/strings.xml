@@ -2,4 +2,6 @@
     <string name="app_name">RickAndMortyWiki</string>
     <string name="episodes">Episodes:</string>
     <string name="last_location">Last location:</string>
+    <string name="snackbar_error">Error loading</string>
+    <string name="snackbar_action">Retry</string>
 </resources>

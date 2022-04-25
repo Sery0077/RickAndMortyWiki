@@ -6,11 +6,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import sery.vlasenko.rickandmortywiki.R
 import sery.vlasenko.rickandmortywiki.data.dao.Character
 import sery.vlasenko.rickandmortywiki.databinding.FragmentCharacterInfoBinding
 import sery.vlasenko.rickandmortywiki.ui.App
 import sery.vlasenko.rickandmortywiki.ui.base.BaseBindingFragment
 import sery.vlasenko.rickandmortywiki.utils.Keys
+import sery.vlasenko.rickandmortywiki.utils.SnackBarHelper
 
 class FragmentCharacterInfo :
     BaseBindingFragment<FragmentCharacterInfoBinding, ViewModelCharacterInfo>
@@ -20,11 +23,15 @@ class FragmentCharacterInfo :
         viewModelFactory
     }
 
+    private var errorSnackBar: Snackbar? = null
+
     override fun onAttach(context: Context) {
         App.appComponent.inject(this)
+
         val characterId = arguments?.getInt(Keys.CHARACTER_ID_KEY)
             ?: throw IllegalStateException("Character id must not be null")
         model.onAttach(characterId)
+
         super.onAttach(context)
     }
 
@@ -35,18 +42,38 @@ class FragmentCharacterInfo :
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onPause() {
+        errorSnackBar?.dismiss()
+        model.onPause()
+        super.onPause()
+    }
+
     private fun processState(state: CharacterInfoState) {
         when (state) {
             is CharacterInfoState.DataLoadError -> {
                 val data = state.message.toString()
 
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show()
+
+                errorSnackBar = SnackBarHelper.errorSnackBar(binding.root) {
+                    model.onErrorClicked()
+                }
+
+                errorSnackBar?.show()
             }
             is CharacterInfoState.DataLoaded -> {
+                errorSnackBar?.dismiss()
+
                 bindViews(state.data)
+
+                binding.progressBar.visibility = View.GONE
+                binding.content.visibility = View.VISIBLE
             }
             is CharacterInfoState.DataLoading -> {
+                errorSnackBar?.dismiss()
 
+                binding.progressBar.visibility = View.VISIBLE
+                binding.content.visibility = View.GONE
             }
         }
     }
@@ -55,6 +82,7 @@ class FragmentCharacterInfo :
         with(binding) {
             Glide.with(requireContext())
                 .load(character.image)
+                .placeholder(R.drawable.character_placeholder)
                 .into(ivAvatar)
 
             tvName.text = character.name

@@ -1,5 +1,6 @@
 package sery.vlasenko.rickandmortywiki.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -7,6 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import sery.vlasenko.rickandmortywiki.BuildConfig
 import sery.vlasenko.rickandmortywiki.data.repository.RickAndMortyService
+import sery.vlasenko.rickandmortywiki.data.repository.implementations.CharacterRepository
+import sery.vlasenko.rickandmortywiki.data.repository.interfaces.ICharacterRepository
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -17,8 +20,8 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
-            .readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
             .build()
 
     @Provides
@@ -29,5 +32,13 @@ class NetworkModule {
             .client(provideOkHttpClient())
             .build()
             .create(RickAndMortyService::class.java)
+}
 
+
+@Module
+interface NetworkBindModule {
+    @Binds
+    fun bindCharacterRepository_to_ICharacterRepository(
+        characterRepository: CharacterRepository
+    ): ICharacterRepository
 }

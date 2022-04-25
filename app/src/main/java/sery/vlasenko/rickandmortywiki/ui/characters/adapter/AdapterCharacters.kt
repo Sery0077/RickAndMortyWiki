@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_character.view.*
+import sery.vlasenko.rickandmortywiki.R
 import sery.vlasenko.rickandmortywiki.data.dao.Character
 import sery.vlasenko.rickandmortywiki.databinding.ItemCharacterBinding
 import sery.vlasenko.rickandmortywiki.databinding.ItemLoadingBinding
 import sery.vlasenko.rickandmortywiki.ui.base.adapter.BaseAdapter
 import sery.vlasenko.rickandmortywiki.ui.base.adapter.RecyclerItem
-import javax.inject.Inject
 
-class AdapterCharacters(private val clickListener: ClickListener): BaseAdapter() {
+class AdapterCharacters(private val clickListener: ClickListener) : BaseAdapter() {
 
     companion object {
         const val ITEM = 0
@@ -38,7 +38,8 @@ class AdapterCharacters(private val clickListener: ClickListener): BaseAdapter()
         return if (currentList[position] == null) LOADING else ITEM
     }
 
-    inner class CharacterVH<T : RecyclerItem>(itemView: ItemCharacterBinding) : BaseVH<T>(itemView) {
+    inner class CharacterVH<T : RecyclerItem>(itemView: ItemCharacterBinding) :
+        BaseVH<T>(itemView) {
 
         override fun bind(item: T?) {
             (item as Character)
@@ -49,6 +50,7 @@ class AdapterCharacters(private val clickListener: ClickListener): BaseAdapter()
 
                 Glide.with(itemView.context)
                     .load(item.image)
+                    .placeholder(R.drawable.character_placeholder)
                     .into(iv_avatar)
 
                 setOnClickListener {

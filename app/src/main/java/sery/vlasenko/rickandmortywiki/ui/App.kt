@@ -2,6 +2,7 @@ package sery.vlasenko.rickandmortywiki.ui
 
 import android.app.Application
 import dagger.Component
+import sery.vlasenko.rickandmortywiki.di.NetworkBindModule
 import sery.vlasenko.rickandmortywiki.di.NetworkModule
 import sery.vlasenko.rickandmortywiki.di.ViewModelModule
 import sery.vlasenko.rickandmortywiki.ui.characterinfo.FragmentCharacterInfo
@@ -19,7 +20,7 @@ class App : Application() {
     }
 }
 
-@Component(modules = [NetworkModule::class, ViewModelModule::class])
+@Component(modules = [NetworkModule::class, ViewModelModule::class, NetworkBindModule::class])
 interface AppComponent {
     // Fragments
     fun inject(fragment: FragmentCharacters)

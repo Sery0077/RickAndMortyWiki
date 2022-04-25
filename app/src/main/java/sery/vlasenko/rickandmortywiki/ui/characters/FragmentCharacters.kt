@@ -7,12 +7,14 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import sery.vlasenko.rickandmortywiki.R
 import sery.vlasenko.rickandmortywiki.databinding.FragmentCharactersBinding
 import sery.vlasenko.rickandmortywiki.ui.App
 import sery.vlasenko.rickandmortywiki.ui.base.BaseBindingFragment
 import sery.vlasenko.rickandmortywiki.ui.characters.adapter.AdapterCharacters
 import sery.vlasenko.rickandmortywiki.utils.Keys
+import sery.vlasenko.rickandmortywiki.utils.SnackBarHelper
 
 class FragmentCharacters :
     BaseBindingFragment<FragmentCharactersBinding, ViewModelCharacters>(FragmentCharactersBinding::inflate),
@@ -23,6 +25,8 @@ class FragmentCharacters :
     }
 
     private val adapter = AdapterCharacters(this)
+
+    private var errorSnackBar: Snackbar? = null
 
     override fun onAttach(context: Context) {
         App.appComponent.inject(this)
@@ -37,6 +41,12 @@ class FragmentCharacters :
         }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onPause() {
+        errorSnackBar?.dismiss()
+        model.onPause()
+        super.onPause()
     }
 
     private fun initRecycler() {
@@ -58,16 +68,26 @@ class FragmentCharacters :
         when (state) {
             is CharactersListState.DataLoadError -> {
                 val data = state.message.toString()
-
                 Toast.makeText(context, data, Toast.LENGTH_SHORT).show()
+
+                errorSnackBar = SnackBarHelper.errorSnackBar(binding.root) {
+                    model.onErrorClicked()
+                }
+
+                errorSnackBar?.show()
             }
             is CharactersListState.DataLoaded -> {
-                val data = state.data
+                errorSnackBar?.dismiss()
 
+                val data = state.data
                 adapter.submitList(data)
+
+                binding.progressBar.visibility = View.GONE
+                binding.rvCharacters.visibility = View.VISIBLE
             }
             is CharactersListState.DataLoading -> {
-
+                binding.progressBar.visibility = View.VISIBLE
+                binding.rvCharacters.visibility = View.GONE
             }
         }
     }
