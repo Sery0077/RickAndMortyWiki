@@ -43,6 +43,10 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVer"
     implementation "com.google.android.material:material:$androidMaterialVer"
 
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVer"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVer"
+
     // Glide
     implementation "com.github.bumptech.glide:glide:$glideVer"
 

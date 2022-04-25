@@ -23,6 +23,8 @@ ext {
     targetSdkVersion = 31
     compileSdkVersion = 31
 
+    // Navigation
+    navigationVer = '2.4.2'
 
     // Dependencies
     coreKtxVer = '1.7.0'

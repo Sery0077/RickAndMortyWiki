@@ -11,7 +11,7 @@ import sery.vlasenko.rickandmortywiki.ui.base.adapter.BaseAdapter
 import sery.vlasenko.rickandmortywiki.ui.base.adapter.RecyclerItem
 import javax.inject.Inject
 
-class AdapterCharacters @Inject constructor() : BaseAdapter() {
+class AdapterCharacters(private val clickListener: ClickListener): BaseAdapter() {
 
     companion object {
         const val ITEM = 0
@@ -38,8 +38,7 @@ class AdapterCharacters @Inject constructor() : BaseAdapter() {
         return if (currentList[position] == null) LOADING else ITEM
     }
 
-    inner class CharacterVH<T : RecyclerItem>(itemView: ItemCharacterBinding) :
-        BaseVH<T>(itemView) {
+    inner class CharacterVH<T : RecyclerItem>(itemView: ItemCharacterBinding) : BaseVH<T>(itemView) {
 
         override fun bind(item: T?) {
             (item as Character)
@@ -51,13 +50,19 @@ class AdapterCharacters @Inject constructor() : BaseAdapter() {
                 Glide.with(itemView.context)
                     .load(item.image)
                     .into(iv_avatar)
+
+                setOnClickListener {
+                    clickListener.onItemClick(item.id.toInt())
+                }
             }
         }
     }
 
-    inner class LoadingVH<T : RecyclerItem>(itemView: ItemLoadingBinding) :
-        BaseVH<T>(itemView) {
-
+    inner class LoadingVH<T : RecyclerItem>(itemView: ItemLoadingBinding) : BaseVH<T>(itemView) {
         override fun bind(item: T?) {}
+    }
+
+    interface ClickListener {
+        fun onItemClick(id: Int)
     }
 }
