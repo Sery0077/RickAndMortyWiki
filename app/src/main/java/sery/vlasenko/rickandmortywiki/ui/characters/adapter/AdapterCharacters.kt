@@ -54,7 +54,7 @@ class AdapterCharacters(private val clickListener: ClickListener) : BaseAdapter(
                     .into(iv_avatar)
 
                 setOnClickListener {
-                    clickListener.onItemClick(item.id.toInt())
+                    clickListener.onItemClick(item)
                 }
             }
         }
@@ -65,6 +65,6 @@ class AdapterCharacters(private val clickListener: ClickListener) : BaseAdapter(
     }
 
     interface ClickListener {
-        fun onItemClick(id: Int)
+        fun onItemClick(character: Character)
     }
 }

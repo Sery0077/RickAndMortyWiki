@@ -1,6 +1,8 @@
 package sery.vlasenko.rickandmortywiki.data.dao
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 import sery.vlasenko.rickandmortywiki.ui.base.adapter.RecyclerItem
 
 data class Characters(
@@ -15,6 +17,7 @@ data class Info(
     val prev: String?,
 )
 
+@Parcelize
 data class Character(
     override val id: String,
     val name: String,
@@ -28,9 +31,10 @@ data class Character(
     val episode: List<String>,
     val url: String,
     val created: String,
-) : RecyclerItem
+) : RecyclerItem, Parcelable
 
+@Parcelize
 data class Location(
     val name: String,
     val url: String,
-)
+): Parcelable

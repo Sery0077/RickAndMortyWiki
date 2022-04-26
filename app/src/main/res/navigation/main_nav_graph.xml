@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/fragmentCharacters"
         android:name="sery.vlasenko.rickandmortywiki.ui.characters.FragmentCharacters"
-        android:label="FragmentCharacters" >
+        android:label="Characters" >
         <action
             android:id="@+id/action_fragmentCharacters_to_fragmentCharacterInfo"
             app:destination="@id/fragmentCharacterInfo" />
@@ -14,5 +14,5 @@
     <fragment
         android:id="@+id/fragmentCharacterInfo"
         android:name="sery.vlasenko.rickandmortywiki.ui.characterinfo.FragmentCharacterInfo"
-        android:label="FragmentCharacterInfo" />
+        android:label="Character Info" />
 </navigation>
