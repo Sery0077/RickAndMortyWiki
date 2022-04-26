@@ -15,6 +15,7 @@ import sery.vlasenko.rickandmortywiki.ui.base.BaseBindingFragment
 import sery.vlasenko.rickandmortywiki.ui.characters.adapter.AdapterCharacters
 import sery.vlasenko.rickandmortywiki.utils.Keys
 import sery.vlasenko.rickandmortywiki.utils.SnackBarHelper
+import sery.vlasenko.rickandmortywiki.data.dao.Character
 
 class FragmentCharacters :
     BaseBindingFragment<FragmentCharactersBinding, ViewModelCharacters>(FragmentCharactersBinding::inflate),
@@ -92,9 +93,9 @@ class FragmentCharacters :
         }
     }
 
-    override fun onItemClick(id: Int) {
+    override fun onItemClick(character: Character) {
         val args = Bundle().apply {
-            putInt(Keys.CHARACTER_ID_KEY, id)
+            putParcelable(Keys.CHARACTER, character)
         }
         findNavController().navigate(R.id.action_fragmentCharacters_to_fragmentCharacterInfo, args)
     }

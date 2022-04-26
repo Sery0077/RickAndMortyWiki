@@ -11,6 +11,7 @@ import sery.vlasenko.rickandmortywiki.R
 import sery.vlasenko.rickandmortywiki.data.dao.Character
 import sery.vlasenko.rickandmortywiki.databinding.FragmentCharacterInfoBinding
 import sery.vlasenko.rickandmortywiki.ui.App
+import sery.vlasenko.rickandmortywiki.ui.ToolbarActivity
 import sery.vlasenko.rickandmortywiki.ui.base.BaseBindingFragment
 import sery.vlasenko.rickandmortywiki.utils.Keys
 import sery.vlasenko.rickandmortywiki.utils.SnackBarHelper
@@ -28,9 +29,14 @@ class FragmentCharacterInfo :
     override fun onAttach(context: Context) {
         App.appComponent.inject(this)
 
-        val characterId = arguments?.getInt(Keys.CHARACTER_ID_KEY)
-            ?: throw IllegalStateException("Character id must not be null")
-        model.onAttach(characterId)
+        val character: Character = arguments?.getParcelable(Keys.CHARACTER)
+            ?: throw IllegalStateException("Character must not be null")
+
+        model.onAttach(character.id.toInt())
+
+        if (context is ToolbarActivity) {
+            context.setToolbarTitle(character.name)
+        }
 
         super.onAttach(context)
     }
@@ -39,6 +45,12 @@ class FragmentCharacterInfo :
         model.state.observe(viewLifecycleOwner) {
             processState(it)
         }
+
+        val character: Character = arguments?.getParcelable(Keys.CHARACTER)
+            ?: throw IllegalStateException("Character must not be null")
+
+        firstInitViews(character)
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -78,13 +90,20 @@ class FragmentCharacterInfo :
         }
     }
 
-    private fun bindViews(character: Character) {
+    private fun firstInitViews(character: Character) {
         with(binding) {
             Glide.with(requireContext())
                 .load(character.image)
                 .placeholder(R.drawable.character_placeholder)
                 .into(ivAvatar)
 
+            tvName.text = character.name
+            bindGenderAndSpecies(character)
+        }
+    }
+
+    private fun bindViews(character: Character) {
+        with(binding) {
             tvName.text = character.name
             tvEpisodesCount.text = character.episode.size.toString()
             tvLastLocation.text = character.location.name

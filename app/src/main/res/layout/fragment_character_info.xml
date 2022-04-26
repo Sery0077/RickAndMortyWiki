@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/content"
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/margin_start"
+            android:id="@+id/header_margin_start"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="10dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/margin_end"
+            android:id="@+id/header_margin_end"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -37,7 +31,7 @@
             android:layout_height="120dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/character_placeholder"
-            app:layout_constraintStart_toStartOf="@id/margin_start"
+            app:layout_constraintStart_toStartOf="@id/header_margin_start"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -49,7 +43,7 @@
             android:maxLines="2"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@id/margin_end"
+            app:layout_constraintEnd_toEndOf="@id/header_margin_end"
             app:layout_constraintStart_toEndOf="@id/iv_avatar"
             app:layout_constraintTop_toTopOf="@id/iv_avatar"
             tools:text="Rick Sanchez" />
@@ -62,7 +56,7 @@
             android:layout_marginTop="8dp"
             android:textSize="18sp"
             app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="@id/margin_end"
+            app:layout_constraintEnd_toEndOf="@id/header_margin_end"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/iv_avatar"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
@@ -79,12 +73,42 @@
             app:layout_constraintTop_toBottomOf="@id/tv_gender_and_species"
             tools:text="Died" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/header_barrier"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/content"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="iv_avatar, tv_gender_and_species, tv_name, tv_status" />
+            android:visibility="invisible"
+            app:constraint_referenced_ids="episodes_label, tv_episodes_count, last_location_label, tv_last_location" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/margin_start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="10dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/margin_end"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="10dp" />
 
         <TextView
             android:id="@+id/episodes_label"
@@ -95,7 +119,7 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@id/margin_start"
-            app:layout_constraintTop_toBottomOf="@id/header_barrier" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_episodes_count"
@@ -138,4 +162,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
